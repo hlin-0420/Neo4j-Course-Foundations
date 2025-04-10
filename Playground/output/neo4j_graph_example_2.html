@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": 1679, "label": "neo4j", "shape": "dot", "title": "Tag"}, {"color": "#97c2fc", "id": 61, "label": "How to use the int[] in where IN clause in Cypher Query (using C#)", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 3106, "label": "How to use the int[] in where IN clause in Cypher Query (using C#)", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 1207, "label": "Aiswarya Rajagopalan", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 5085, "label": "AND clause for matching 3 conditions in NEO4j", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 2554, "label": "AND clause for matching 3 conditions in NEO4j", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 2802, "label": "utnaf", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 4686, "label": "Neo4j: Cypher query to parallelize a row of the result from a previous query", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 2204, "label": "Neo4j: Cypher query to parallelize a row of the result from a previous query", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 2441, "label": "Toma\u017e Bratani\u010d", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 447, "label": "Compute Avg of list value for each element in Neo4j", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 5747, "label": "Compute Avg of list value for each element in Neo4j", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 5620, "label": "cybersam", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 5078, "label": "Spring Data Neo4j @Properties annotation", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 2550, "label": "Spring Data Neo4j @Properties annotation", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 2457, "label": "meistermeier", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 4642, "label": "Cypher - get all associated relationships for a node", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 2172, "label": "Cypher - get all associated relationships for a node", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 2449, "label": "David Makogon", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 4736, "label": "Correct way to bulk insert / merge nodes and edges", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 2258, "label": "Correct way to bulk insert / merge nodes and edges", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 2462, "label": "Nigel Small", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 4875, "label": "Building a product recommendation system, collaborative filtering and graph database", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 2360, "label": "Building a product recommendation system, collaborative filtering and graph database", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 5297, "label": "Cypher Query - Collect two separate types of nodes connected to a third type of node", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 2747, "label": "Cypher Query - Collect two separate types of nodes connected to a third type of node", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 2485, "label": "InverseFalcon", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 4854, "label": "Is it OK to have millions of directed relationships between two nodes in Neo4j? Will it add to latency in fetching the data?", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 2343, "label": "Is it OK to have millions of directed relationships between two nodes in Neo4j? Will it add to latency in fetching the data?", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 1339, "label": "Graphileon", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 5143, "label": "python asking me for installed modules", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 2604, "label": "python asking me for installed modules", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 2813, "label": "kinshukdua", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 5337, "label": "Neo4j how to get (DISTINCT) all nodes and relationships with at least one node in common?", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 2775, "label": "Neo4j how to get (DISTINCT) all nodes and relationships with at least one node in common?", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 1137, "label": "b3rt0", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 205, "label": "Is there a simple way to \u0026quot;unpack\u0026quot; a list in Neo4j?", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 3244, "label": "Is there a simple way to \u0026quot;unpack\u0026quot; a list in Neo4j?", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 334, "label": "Cypher Match-MERGE query fails on ConstraintValidationFailed", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 5608, "label": "Cypher Match-MERGE query fails on ConstraintValidationFailed", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 450, "label": "Variable in neo4j query", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 5750, "label": "Variable in neo4j query", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 476, "label": "Neo4j: Matching nodes in FOREACH", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 5779, "label": "Neo4j: Matching nodes in FOREACH", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 5295, "label": "neo4j delete nodey with children and without", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 2743, "label": "neo4j delete nodey with children and without", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 495, "label": "Neo4j - Graph Data Science library - How to cypher-query against a named graph in Graph Catalog?", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 5797, "label": "Neo4j - Graph Data Science library - How to cypher-query against a named graph in Graph Catalog?", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 5931, "label": "s1ck", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 524, "label": "Avoid creating multiple relationships for each match", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 5826, "label": "Avoid creating multiple relationships for each match", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 568, "label": "How to merge and then sort two lists in Cypher?", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 5872, "label": "How to merge and then sort two lists in Cypher?", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 507, "label": "Add constraints to neo4j node based on node property value", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 5809, "label": "Add constraints to neo4j node based on node property value", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 588, "label": "query with regex in neo4j doesn\u0026#39;t return the correct result", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 5893, "label": "query with regex in neo4j doesn\u0026#39;t return the correct result", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 5939, "label": "Brant Boehmann", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 4701, "label": "Do you know of an example of Grails and neo4j configuration?", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 2221, "label": "Do you know of an example of Grails and neo4j configuration?", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 2455, "label": "Puneet Behl", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 5580, "label": "How to handle result", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 3017, "label": "How to handle result", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 2445, "label": "fbiville", "shape": "dot", "title": "User"}, {"color": "#97c2fc", "id": 5431, "label": "Get nodes sorted by proximity and at the same level sort by date", "shape": "dot", "title": "Question"}, {"color": "#97c2fc", "id": 2903, "label": "Get nodes sorted by proximity and at the same level sort by date", "shape": "dot", "title": "Answer"}, {"color": "#97c2fc", "id": 982, "label": "Miguel", "shape": "dot", "title": "User"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": 1679, "label": "TAGGED", "to": 61}, {"arrows": "to", "from": 61, "label": "ANSWERED", "to": 3106}, {"arrows": "to", "from": 3106, "label": "PROVIDED", "to": 1207}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 5085}, {"arrows": "to", "from": 5085, "label": "ANSWERED", "to": 2554}, {"arrows": "to", "from": 2554, "label": "PROVIDED", "to": 2802}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 4686}, {"arrows": "to", "from": 4686, "label": "ANSWERED", "to": 2204}, {"arrows": "to", "from": 2204, "label": "PROVIDED", "to": 2441}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 447}, {"arrows": "to", "from": 447, "label": "ANSWERED", "to": 5747}, {"arrows": "to", "from": 5747, "label": "PROVIDED", "to": 5620}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 5078}, {"arrows": "to", "from": 5078, "label": "ANSWERED", "to": 2550}, {"arrows": "to", "from": 2550, "label": "PROVIDED", "to": 2457}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 4642}, {"arrows": "to", "from": 4642, "label": "ANSWERED", "to": 2172}, {"arrows": "to", "from": 2172, "label": "PROVIDED", "to": 2449}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 4736}, {"arrows": "to", "from": 4736, "label": "ANSWERED", "to": 2258}, {"arrows": "to", "from": 2258, "label": "PROVIDED", "to": 2462}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 4875}, {"arrows": "to", "from": 4875, "label": "ANSWERED", "to": 2360}, {"arrows": "to", "from": 2360, "label": "PROVIDED", "to": 2441}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 5297}, {"arrows": "to", "from": 5297, "label": "ANSWERED", "to": 2747}, {"arrows": "to", "from": 2747, "label": "PROVIDED", "to": 2485}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 4854}, {"arrows": "to", "from": 4854, "label": "ANSWERED", "to": 2343}, {"arrows": "to", "from": 2343, "label": "PROVIDED", "to": 1339}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 5143}, {"arrows": "to", "from": 5143, "label": "ANSWERED", "to": 2604}, {"arrows": "to", "from": 2604, "label": "PROVIDED", "to": 2813}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 5337}, {"arrows": "to", "from": 5337, "label": "ANSWERED", "to": 2775}, {"arrows": "to", "from": 2775, "label": "PROVIDED", "to": 1137}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 205}, {"arrows": "to", "from": 205, "label": "ANSWERED", "to": 3244}, {"arrows": "to", "from": 3244, "label": "PROVIDED", "to": 1339}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 334}, {"arrows": "to", "from": 334, "label": "ANSWERED", "to": 5608}, {"arrows": "to", "from": 5608, "label": "PROVIDED", "to": 5620}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 450}, {"arrows": "to", "from": 450, "label": "ANSWERED", "to": 5750}, {"arrows": "to", "from": 5750, "label": "PROVIDED", "to": 5620}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 476}, {"arrows": "to", "from": 476, "label": "ANSWERED", "to": 5779}, {"arrows": "to", "from": 5779, "label": "PROVIDED", "to": 2441}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 5295}, {"arrows": "to", "from": 5295, "label": "ANSWERED", "to": 2743}, {"arrows": "to", "from": 2743, "label": "PROVIDED", "to": 2485}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 495}, {"arrows": "to", "from": 495, "label": "ANSWERED", "to": 5797}, {"arrows": "to", "from": 5797, "label": "PROVIDED", "to": 5931}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 524}, {"arrows": "to", "from": 524, "label": "ANSWERED", "to": 5826}, {"arrows": "to", "from": 5826, "label": "PROVIDED", "to": 2441}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 568}, {"arrows": "to", "from": 568, "label": "ANSWERED", "to": 5872}, {"arrows": "to", "from": 5872, "label": "PROVIDED", "to": 5620}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 507}, {"arrows": "to", "from": 507, "label": "ANSWERED", "to": 5809}, {"arrows": "to", "from": 5809, "label": "PROVIDED", "to": 5620}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 588}, {"arrows": "to", "from": 588, "label": "ANSWERED", "to": 5893}, {"arrows": "to", "from": 5893, "label": "PROVIDED", "to": 5939}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 4701}, {"arrows": "to", "from": 4701, "label": "ANSWERED", "to": 2221}, {"arrows": "to", "from": 2221, "label": "PROVIDED", "to": 2455}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 5580}, {"arrows": "to", "from": 5580, "label": "ANSWERED", "to": 3017}, {"arrows": "to", "from": 3017, "label": "PROVIDED", "to": 2445}, {"arrows": "to", "from": 1679, "label": "TAGGED", "to": 5431}, {"arrows": "to", "from": 5431, "label": "ANSWERED", "to": 2903}, {"arrows": "to", "from": 2903, "label": "PROVIDED", "to": 982}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
