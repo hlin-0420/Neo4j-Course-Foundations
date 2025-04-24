@@ -1,4 +1,4 @@
-from config import Neo4jConnection
+from config import Neo4jConnection, load_neo4j_config
 from query_runner import QueryRunner
 from index_manager import IndexManager
 import neo4j
@@ -6,22 +6,12 @@ import os
 # Get the directory two levels up from main.py (i.e., the project root)
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Load Configurations
-# Load config from file
-def load_neo4j_config(filepath):
-    config = {}
-    with open(filepath, 'r') as file:
-        for line in file:
-            if '=' in line:
-                key, value = line.strip().split('=', 1)
-                config[key] = value
-    return config
-
 # Initialize connection
 
 # Construct the full path to the movie-config.txt
 config_path = os.path.join(project_root, "Encryption", "movie-config.txt")
 
+# Load Configurations
 config = load_neo4j_config(config_path)
 uri = config.get("NEO4J_URI")
 username = config.get("NEO4J_USERNAME")
