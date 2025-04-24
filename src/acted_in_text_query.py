@@ -1,14 +1,14 @@
 from neo4j import GraphDatabase
 import networkx as nx
-import matplotlib.pyplot as plt
+from pyvis.network import Network
 import os
 from config import Neo4jConnection, load_neo4j_config
+import webbrowser
 
 # Get the directory two levels up from main.py (i.e., the project root)
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Initialize connection
-
 # Construct the full path to the movie-config.txt
 config_path = os.path.join(project_root, "Encryption", "movie-config.txt")
 
@@ -43,7 +43,7 @@ def create_index_and_query(tx):
 with driver.session() as session:
     results = session.execute_write(create_index_and_query)
 
-# Visualise results as a mind map
+# Visualise results using Pyvis
 G = nx.Graph()
 
 for person, role, movie in results:
@@ -51,16 +51,28 @@ for person, role, movie in results:
     G.add_node(movie, label='Movie')
     G.add_edge(person, movie, label=role)
 
-# Draw the graph
-pos = nx.spring_layout(G, seed=42)
-labels = nx.get_edge_attributes(G, 'label')
+# Convert NetworkX graph to Pyvis
+net = Network(height='750px', width='100%', notebook=False, bgcolor='#222222', font_color='white')
+net.from_nx(G)
 
-plt.figure(figsize=(10, 8))
-nx.draw(G, pos, with_labels=True, node_color='lightblue', node_size=2000, font_size=10, font_weight='bold', edge_color='gray')
-nx.draw_networkx_edge_labels(G, pos, edge_labels=labels, font_color='red')
+# Customize nodes
+for node in net.nodes:
+    if node['label'] == 'Person':
+        node['color'] = 'skyblue'
+        node['size'] = 25
+    else:
+        node['color'] = 'lightgreen'
+        node['size'] = 20
 
-plt.title("Neo4j Movie Mind Map: 'George' as 'General'")
-plt.show()
+# Customize edges
+for edge in net.edges:
+    edge['title'] = edge['label']
+    edge['color'] = 'red'
+
+# Save and show the result
+output_path = os.path.join(project_root, "neo4j_movie_mind_map.html")
+net.write_html(output_path)
+webbrowser.open("file://" + output_path)
 
 # Close the driver
 driver.close()
