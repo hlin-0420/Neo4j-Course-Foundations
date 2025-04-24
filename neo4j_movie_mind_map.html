@@ -88,8 +88,8 @@
                   
 
                   // parsing and collecting nodes and edges from the python
-                  nodes = new vis.DataSet([{"color": "skyblue", "font": {"color": "white"}, "id": "George C. Scott", "label": "Person", "shape": "dot", "size": 25}, {"color": "lightgreen", "font": {"color": "white"}, "id": "Taps", "label": "Movie", "shape": "dot", "size": 20}, {"color": "lightgreen", "font": {"color": "white"}, "id": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb", "label": "Movie", "shape": "dot", "size": 20}]);
-                  edges = new vis.DataSet([{"color": "red", "from": "George C. Scott", "label": "General Harlan Bache", "title": "General Harlan Bache", "to": "Taps", "width": 1}, {"color": "red", "from": "George C. Scott", "label": "General \"Buck\" Turgidson", "title": "General \"Buck\" Turgidson", "to": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb", "width": 1}]);
+                  nodes = new vis.DataSet([{"color": "#87CEEB", "font": {"color": "white"}, "id": "George C. Scott", "label": "Person", "shape": "dot", "size": 25, "title": "Person: George C. Scott"}, {"color": "#90EE90", "font": {"color": "white"}, "id": "Taps", "label": "Movie", "shape": "dot", "size": 20, "title": "Movie: Taps"}, {"color": "#90EE90", "font": {"color": "white"}, "id": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb", "label": "Movie", "shape": "dot", "size": 20, "title": "Movie: Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb"}]);
+                  edges = new vis.DataSet([{"arrowStrikethrough": false, "arrows": "to", "color": "#FF4500", "from": "George C. Scott", "label": "General Harlan Bache", "title": "Role: General Harlan Bache", "to": "Taps", "width": 1}, {"arrowStrikethrough": false, "arrows": "to", "color": "#FF4500", "from": "George C. Scott", "label": "General \"Buck\" Turgidson", "title": "Role: General \"Buck\" Turgidson", "to": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb", "width": 1}]);
 
                   nodeColors = {};
                   allNodes = nodes.get({ returnType: "Object" });
