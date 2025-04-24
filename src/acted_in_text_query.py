@@ -68,10 +68,12 @@ for node in net.nodes:
         node['title'] = f"Movie: {node['id']}"  # Show title
 
 # Customize edges
-# Customize edges to show role in tooltips
+# Customize edges to include direction arrows and enhanced tooltip
 for edge in net.edges:
-    edge['title'] = f"Role: {edge['label']}"  # Show role in tooltip
-    edge['color'] = '#FF4500'  # or 'red' for strong contrast
+    edge['title'] = f"Role: {edge['label']}"  # Tooltip shows role
+    edge['color'] = '#FF4500'  # Orange-red for visibility
+    edge['arrows'] = 'to'  # Arrow pointing to the movie node
+    edge['arrowStrikethrough'] = False  # Clean arrow style
 
 # Save and show the result
 output_path = os.path.join(project_root, "neo4j_movie_mind_map.html")
