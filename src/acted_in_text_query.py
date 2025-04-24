@@ -56,18 +56,22 @@ net = Network(height='750px', width='100%', notebook=False, bgcolor='#222222', f
 net.from_nx(G)
 
 # Customize nodes
+# Customize nodes with additional info and improved colours
 for node in net.nodes:
     if node['label'] == 'Person':
-        node['color'] = 'skyblue'
+        node['color'] = '#87CEEB'  # sky blue
         node['size'] = 25
+        node['title'] = f"Person: {node['id']}"  # Show name
     else:
-        node['color'] = 'lightgreen'
+        node['color'] = '#90EE90'  # light green
         node['size'] = 20
+        node['title'] = f"Movie: {node['id']}"  # Show title
 
 # Customize edges
+# Customize edges to show role in tooltips
 for edge in net.edges:
-    edge['title'] = edge['label']
-    edge['color'] = 'red'
+    edge['title'] = f"Role: {edge['label']}"  # Show role in tooltip
+    edge['color'] = '#FF4500'  # or 'red' for strong contrast
 
 # Save and show the result
 output_path = os.path.join(project_root, "neo4j_movie_mind_map.html")
